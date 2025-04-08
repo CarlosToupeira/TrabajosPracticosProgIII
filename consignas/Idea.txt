@@ -13,6 +13,7 @@ las cards o tarjetas pueden representar los sectores
 mencionados como un apartado que represente y brinde informacion
 adicional sobre la memoria RAM de una computadora y mencionar
 empresa/s dominante/s y popular/es en la produccion del componente
+(Actualizado: Juego 2D en JavaScript tipo plataforma estilo museo con vista a las tarjetas)
 
 En la galeria de imagenes se podria mostrar computadoras
 a lo largo de los años ya sea desde sus inicios hasta el
