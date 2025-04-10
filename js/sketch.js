@@ -441,12 +441,18 @@ class World
 
   }
 
-  drawWorld() 
+  drawWorld(camX, camY) 
   {
+    //only draw tiles that are visible
+    let minCol = max(0, floor(camX / this.tileSize));
+    let maxCol = min(this.cols, ceil((camX + width) / this.tileSize));
 
-    for (let i = 0; i < this.rows; i++) 
+    let minRow = max(0, floor(camY / this.tileSize));
+    let maxRow = min(this.rows, ceil((camY + height) / this.tileSize));
+
+    for (let i = minRow; i < maxRow; i++) 
     {
-      for (let j = 0; j < this.cols; j++) 
+      for (let j = minCol; j < maxCol; j++) 
       {
 
         let x = j * this.tileSize;
@@ -553,7 +559,7 @@ function draw()
 
   if(museum && museum.worldImage && museum.map.length > 0)
   {
-    museum.drawWorld();
+    museum.drawWorld(camX, camY);
   }
 
   if (player && player.sprite && player.sprite.sprites.length > 0)
