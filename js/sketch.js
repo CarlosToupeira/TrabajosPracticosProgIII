@@ -61,7 +61,7 @@ class MyAnimation
         let croppedImage = this.spriteSheet.get(x, y, this.spriteWidth, this.spriteHeigth);
 
         croppedImage.resize(24*2,32*2);
-
+        
         this.sprites.push(croppedImage);
       }
     }
@@ -106,7 +106,7 @@ class Picture
 
 class Player
 {
-    constructor(xPos, yPos, eWidth, eHeight, spriteSheetPath, spriteWidth, spriteHeigth)
+    constructor(xPos, yPos, eWidth, eHeight, spriteSheetPath, spriteWidth, spriteHeigth, footstep, popupSound, popupOutSound)
     {
         this.x = xPos;
         this.y = yPos;
@@ -121,7 +121,11 @@ class Player
         this.wasZPressed = false;
         this.activePicture = null;
 
-        
+        this.footstep = footstep;
+        this.footstep.setVolume(0.6);
+
+        this.popupSound = popupSound;
+        this.popupOutSound = popupOutSound;
 
         this.sprite = new MyAnimation(spriteSheetPath, spriteWidth, spriteHeigth);
        
@@ -196,7 +200,7 @@ class Player
         if (newState !== this.currentAnimState) 
         {
           this.currentAnimState = newState;
-    
+
           switch (newState) 
           {
             case "UP":
@@ -218,12 +222,17 @@ class Player
         if (this.sprite.frameCounter >= this.sprite.framesPerStep) 
         {
           this.sprite.index++;
-
+          
           if(this.sprite.index > this.sprite.endFrame)
           {
             this.sprite.index = this.sprite.startFrame;
+            
           }
-
+          if (!this.footstep.isPlaying())
+          {
+            this.footstep.play();
+          }
+          
           this.sprite.frameCounter = 0;
         }
       }
@@ -287,22 +296,37 @@ class Player
       {
         if ((keyIsDown(90) || keyIsDown(122)) && !this.wasZPressed && this.currentAnimState == 'UP') 
         {
+          
+
           this.displayPopup = !this.displayPopup;
           this.activePicture = picture;             
           this.wasZPressed = true;
+
+          if (this.displayPopup && !this.popupSound.isPlaying()) 
+          {
+            this.popupSound.play();
+          }
+
+          if (!this.displayPopup && !this.popupOutSound.isPlaying()) 
+            {
+              this.popupOutSound.play();
+            }
+
         } 
         else if (!keyIsDown(90) && !keyIsDown(122)) 
         {
+         
           this.wasZPressed = false;
         }
       }
 
       if (this.displayPopup && this.activePicture === picture ) 
       {
+        
+
         let camX = floor(this.x + this.width / 2 - width / 2);
         let camY = floor(this.y + this.height / 2 - height / 2);
 
-        noStroke();
         fill(0, 0, 0, 150);
         rect(camX, camY, width, height);
 
@@ -342,7 +366,6 @@ class Player
     {
       let xOffset = -14;
       let yOffset = -44;
-
       image(this.sprite.sprites[this.sprite.index], this.x + xOffset, this.y + yOffset);
 
     }
@@ -351,16 +374,17 @@ class Player
 
 class World
 {
-  constructor(worldPath, tileSize, wallImage, floorImage, ceilColor, picturesPathSmall, picturesPathBig)
+  constructor(worldPath, tileSize, wallImage, floorImage, floorShadowImage, ceilImage, picturesPathSmall, picturesPathBig)
   {
     this.worldPath = worldPath;
 
     this.worldImage = worldPath;
     this.wallImage = wallImage;
     this.floorImage = floorImage;
+    this.floorShadowImage = floorShadowImage;
 
     this.tileSize = tileSize;
-    this.ceilColor = ceilColor;
+    this.ceilImage = ceilImage;
 
     this.map = [];
 
@@ -396,11 +420,18 @@ class World
       for(let j = 0; j < this.cols; j++)
       {
 
+
         let index = 4 * (j + i * this.cols);
         let r = this.worldImage.pixels[index];
         let g = this.worldImage.pixels[index + 1];
         let b = this.worldImage.pixels[index + 2];
+        let a = this.worldImage.pixels[index + 3];
         console.log(`(${r}, ${g}, ${b}) at (${j}, ${i})`);
+
+        if (a === 0) {
+          this.map[i][j] = -1;
+          continue;
+        }
 
         if (r === 100 && g === 100 && b === 100)
         {
@@ -426,10 +457,11 @@ class World
 
 
         }
-        else
+        else if (r === 255 && g === 255 && b === 255) 
         {
           this.map[i][j] = 0; // floor
         }
+
       }
     }
 
@@ -466,18 +498,16 @@ class World
           case 1:
             image(this.wallImage, x, y, this.tileSize, this.tileSize);
             break;
+          case 2:
+            image(this.ceilImage,x,y,this.tileSize, this.tileSize);
+            break;
           case 3:
-            image(this.floorImage, j * this.tileSize, i * this.tileSize, this.tileSize, this.tileSize);
-            noStroke();
-            fill(0, 0, 0, 100);
-            rect(j * this.tileSize, i * this.tileSize, this.tileSize, this.tileSize);
+            image(this.floorShadowImage, x, y, this.tileSize, this.tileSize);
             break;
           case 4:
-            image(this.wallImage, j * this.tileSize, i * this.tileSize, this.tileSize, this.tileSize);
+            image(this.wallImage, x, y, this.tileSize, this.tileSize);
             break;
           default:
-            fill(this.ceilColor);
-            rect(j * this.tileSize, i * this.tileSize, this.tileSize, this.tileSize);
         }
         
       }
@@ -506,55 +536,78 @@ let gPicturesBig = [];
 
 function preload() 
 {
-  worldImage = loadImage("assets/map.png");
-  wallImage = loadImage("assets/wall.png");
-  floorImage = loadImage("assets/floor.png");
+  footstep = loadSound("assets/sounds/footstep.wav");
+  popup = loadSound("assets/sounds/popup.wav");
+  popupOut = loadSound("assets/sounds/popupOut.wav");
+  backgroundMusic = loadSound("assets/sounds/background.wav");
+
+  worldImage = loadImage("assets/images/map.png");
+  wallImage = loadImage("assets/images/wall.png");
+  floorImage = loadImage("assets/images/floor.png");
+  shadowFloorImage = loadImage("assets/images/floorShadow.png");
+  cillingImage = loadImage("assets/images/ceilling.png");
 
   
 
   let pictureNamesSmall = ["sPictureA.png", "sPictureB.png", "sPictureC.png"];
   for (let name of pictureNamesSmall) 
   {
-    gPicturesSmall.push(loadImage(`assets/${name}`));
+    gPicturesSmall.push(loadImage(`assets/images/${name}`));
   }
 
   let pictureNamesBig = ["bPictureA.jpg", "sPictureB.png", "sPictureC.png"];
   for (let name of pictureNamesBig) 
   {
-    gPicturesBig.push(loadImage(`assets/${name}`));
+    gPicturesBig.push(loadImage(`assets/images/${name}`));
   }
 
 }
 
 function setup() 
 {
+  noSmooth();
   noStroke();
+  pixelDensity(1);
+  colorMode(RGB);
+  zoom = 1;
+  
 
-  let canvas = createCanvas(windowWidth * 0.75, windowHeight * 0.75);
-  canvas.parent('canvas-container');
-  canvas.position((windowWidth - width) / 2, (windowHeight - height) / 2);
+  let canvas = createCanvas(windowWidth, windowHeight * 0.855);
+  canvas.parent("canvas-container");
   frameRate(60);
-  spritePath = "assets/madotsuki.png";
-  player = new Player(120,240,20,15, spritePath,24, 32);
+
+
+  spritePath = "assets/images/madotsuki.png";
+  player = new Player(120,240,20,15, spritePath,24, 32, footstep, popup, popupOut);
 
   //add pictures to an array and then merge it with the loadWorld() from museum
 
-  museum = new World(worldImage, 20, wallImage,floorImage, color('black'), gPicturesSmall, gPicturesBig);
+  museum = new World(worldImage, 20, wallImage,floorImage, shadowFloorImage, cillingImage , gPicturesSmall, gPicturesBig);
 
   textSize(32);
   fill(255);
+
+  backgroundMusic.setVolume(0.5);
   
 }
 
 function draw() 
 {
-  colorMode(RGB);
-  background(10,10,70);
+    
+  clear();
 
-  let camX = floor(player.x + player.width / 2 - width / 2);
-  let camY = floor(player.y + player.height / 2 - height / 2);
+  if(!backgroundMusic.isPlaying())
+  {
+    backgroundMusic.play();
+  }
 
-  push();               
+  let camX = floor(player.x + player.width / 2 / zoom - width / 2 / zoom);
+  let camY = floor(player.y + player.height / 2 / zoom - height / 2 /  zoom);
+  
+  push();
+  
+  scale(zoom);
+  
   translate(-camX, -camY);
 
   if(museum && museum.worldImage && museum.map.length > 0)
@@ -567,8 +620,7 @@ function draw()
     
     player.draw();
     player.move();
-
-
+    
     //collisions
 
     let range = 2;
@@ -610,5 +662,5 @@ function draw()
 
 function windowResized() 
 {
-  resizeCanvas(windowWidth * 0.75, windowHeight * 0.75);
+  resizeCanvas(windowWidth, windowHeight * 0.855);
 }
