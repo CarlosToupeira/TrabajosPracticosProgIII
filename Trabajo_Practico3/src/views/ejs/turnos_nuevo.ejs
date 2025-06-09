@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registrar nuevo Turno</title>
+</head>
+
+<body>
+    <h2>Registrar Turno a un Paciente</h2>
+
+    <form id="formTurno">
+        <!-- Selección de paciente -->
+        <label for="selectPaciente">Paciente:</label>
+        <select id="selectPaciente" name="pacienteId" required></select><br><br>
+
+        <!-- Fecha del turno -->
+        <label for="fecha">Fecha:</label>
+        <input type="date" id="fecha" name="fecha" required><br><br>
+
+        <!-- Estado -->
+        <label for="estado">Estado:</label>
+        <select id="estado" name="estado" required>
+            <option value="reservado">Reservado</option>
+            <option value="cancelado">Cancelado</option>
+        </select><br><br>
+
+        <button type="submit">Registrar turno</button>
+    </form>
+
+    <div id="mensaje"></div>
+
+    <script>
+        // Cargar pacientes al iniciar
+        window.addEventListener('DOMContentLoaded', async () => {
+            const select = document.getElementById('selectPaciente');
+
+            try {
+                const response = await fetch('http://localhost:3001/api/v1/pacientes/');
+                const pacientes = await response.json();
+
+                pacientes.forEach(paciente => {
+                    const option = document.createElement('option');
+                    option.value = paciente.id;
+                    option.textContent = paciente.name || paciente.email;
+                    select.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error al cargar pacientes:', error);
+                select.innerHTML = '<option disabled>Error al cargar pacientes</option>';
+            }
+        });
+
+        // Enviar datos del turno al backend
+        document.getElementById('formTurno').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const pacienteId = document.getElementById('selectPaciente').value;
+            const fecha = document.getElementById('fecha').value;
+            const estado = document.getElementById('estado').value;
+
+            const turno = { pacienteId, fecha, estado };
+
+            try {
+                const response = await fetch('http://localhost:3001/api/v1/turnos/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(turno)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    document.getElementById('mensaje').textContent = 'Turno registrado con éxito.';
+                } else {
+                    document.getElementById('mensaje').textContent = 'Error: ' + (result.mensaje || 'No se pudo registrar');
+                }
+            } catch (error) {
+                document.getElementById('mensaje').textContent = 'Error al conectar con el servidor.';
+                console.error(error);
+            }
+        });
+    </script>
+</body>
+
+</html>

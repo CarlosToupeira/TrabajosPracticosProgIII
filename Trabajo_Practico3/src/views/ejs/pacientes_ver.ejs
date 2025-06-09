@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ver todos los Pacientes</title>
+</head>
+
+<body>
+
+    <h2>Ver todos los Pacientes</h2>
+
+    <div class="pacientes"></div>
+
+    <script>
+        async function cargarPacientes() {
+            const contenedor = document.querySelector('.pacientes');
+            contenedor.innerHTML = ''; // Limpiar antes de renderizar
+
+            try {
+                const response = await fetch('http://localhost:3001/api/v1/pacientes/');
+                const pacientes = await response.json();
+
+                if (!Array.isArray(pacientes) || pacientes.length === 0) {
+                    contenedor.innerHTML = '<p>No hay pacientes registrados.</p>';
+                    return;
+                }
+
+                const lista = document.createElement('ul');
+
+                pacientes.forEach(paciente => {
+                    const li = document.createElement('li');
+                    const nombre = paciente.name || paciente.email;
+                    li.innerHTML = `ID: ${paciente.id} - Nombre: ${nombre} `;
+
+                    const btnEliminar = document.createElement('button');
+                    btnEliminar.textContent = 'Eliminar';
+                    btnEliminar.onclick = async () => {
+                        if (confirm(`¿Eliminar al paciente ${nombre}?`)) {
+                            try {
+                                const deleteResp = await fetch(`http://localhost:3001/api/v1/pacientes/${paciente.id}`, {
+                                    method: 'DELETE'
+                                });
+
+                                if (deleteResp.ok) {
+                                    li.remove(); // Eliminar de la lista visualmente
+                                } else {
+                                    const data = await deleteResp.json();
+                                    alert(`Error al eliminar: ${data.mensaje || 'Error desconocido'}`);
+                                }
+                            } catch (err) {
+                                console.error(err);
+                                alert('Error al conectar con el servidor');
+                            }
+                        }
+                    };
+
+                    li.appendChild(btnEliminar);
+                    lista.appendChild(li);
+                });
+
+                contenedor.appendChild(lista);
+
+            } catch (error) {
+                console.error('Error al obtener pacientes:', error);
+                contenedor.innerHTML = '<p>Error al cargar pacientes.</p>';
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', cargarPacientes);
+    </script>
+
+</body>
+
+</html>

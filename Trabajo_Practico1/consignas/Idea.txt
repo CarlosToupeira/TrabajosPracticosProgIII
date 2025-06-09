@@ -1,0 +1,23 @@
+Una idea de tema puede ser representar caracteristicas 
+especificas de hardware separado en categorias o sectores 
+(como puede ser motherboards, graphic cards, RAMs, etc) 
+con informacion concreta y sus mejoras tecnologicas mediante
+su cronologia evolutiva ademas de su funcion en el apartado
+de la programacion seguido de imagenes a base de guias
+
+El home o el inicio de la pagina puede describir un poco de informacion
+sobre los equipos de computacion y otro poco sobre la programacion
+y la relacion que forman con sus caracteristicas
+
+las cards o tarjetas pueden representar los sectores
+mencionados como un apartado que represente y brinde informacion
+adicional sobre la memoria RAM de una computadora y mencionar
+empresa/s dominante/s y popular/es en la produccion del componente
+(Actualizado: Juego 2D en JavaScript tipo plataforma estilo museo con vista a las tarjetas)
+
+En la galeria de imagenes se podria mostrar computadoras
+a lo largo de los años ya sea desde sus inicios hasta el
+momento actual de la tecnologia 
+o otra tematica relacionada puede ser la evolucion del software
+(Windows, Linux, Mac OS)
+sino tambien lenguajes de programacion (Python, C++, HTML)
