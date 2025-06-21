@@ -1,0 +1,50 @@
+# Node modules
+node_modules/
+
+# Build output
+build/
+dist/
+out/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Testing
+coverage/
+*.lcov
+
+# Editor settings
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Misc
+.cache/
+*.log
+*.pid
+*.seed
+*.tgz
+*.swp
+
+# Optional: React Native or Expo
+.expo/
+.expo-shared/
+
+# Optional: Next.js (si lo usás)
+.next/
+.vercel/
+
+# Optional: Vite
+.vite/
+
+# Optional: Firebase / Netlify / Others
+.firebase/
+.netlify/

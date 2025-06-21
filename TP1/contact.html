@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FibraRed Soluciones - Contacto</title>
+    <link rel="icon" type="image/x-icon" href="./img/logo.png">
+
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+
+    <!-- STYLES -->
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/sections.css">
+    <link rel="stylesheet" href=".css/contact.css">
+    <link rel="stylesheet" href="./css/media.css">
+</head>
+
+<body>
+    <!-- barra de navegacion -->
+    <header>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+        <ul>
+            <li><img src="./img/logo.png" alt="logo imagen" class="logo-nav"></li>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="#contact">Contacto</a></li>
+        </ul>
+    </header>
+
+    <!-- cuerpo -->
+    <main>
+        <!-- slider -->
+        <div class="main-slider">
+            <div>
+                <h2>Soluciones integrales de redes para telecomunicaciones en todo el país.</h2>
+                <strong>Interconexiones, redes urbanas e interurbanas, grandes clientes, corporativos, FTTH, FTTX, nodos
+                    ópticos, empresas de minería, gas, petróleo, energía en alta-media tensión, generadores, industrias,
+                    cooperativas, entes estatales, fuerzas armadas, TV.</strong>
+                <button><a href="#contact">Conozca más</a></button>
+            </div>
+        </div>
+
+        <!-- formulario de contacto -->
+        <section id="contact" class="contact-form-section">
+            <div class="f-title">
+                <h2>Formulario de Contacto</h2>
+                <strong>Queremos saber acerca de sus inquietudes, postulaciones o inconvenientes</strong>
+            </div>
+            <form action="#" method="POST">
+                <div class="form-group">
+                    <label for="name">Nombre:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Teléfono:</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+
+                <div class="form-group">
+                    <label for="comments">Comentarios:</label>
+                    <textarea id="comments" name="comments" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="service">Tipo de servicio:</label>
+                    <select id="service" name="service">
+                        <option value="soporte">Soporte Técnico</option>
+                        <option value="ventas">Ventas</option>
+                        <option value="consulta">Consulta General</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>¿Desea recibir novedades?</label>
+                    <div class="form-options">
+                        <label><input type="radio" name="newsletter" value="si"> Sí</label>
+                        <label><input type="radio" name="newsletter" value="no"> No</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit">Enviar</button>
+                    <button type="reset">Resetear</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <!-- pie de pagina -->
+    <footer>
+        <div class="title">
+            <strong>Donde nos encontramos?</strong>
+            <h2>Bases operativas</h2>
+        </div>
+        <div class="map">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3113.555558017226!2d-62.25158352337689!3d-38.705052171765736!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95eda358467c5a8d%3A0xf9c386aaaf0a43ce!2sFIBRARED%20SRL%20Telecomunicaciones%20Digitales!5e0!3m2!1ses!2sar!4v1750304559997!5m2!1ses!2sar"
+                height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <strong>Rawson 63, Bahía Blanca, Argentina</strong>
+            <i>38° 42′ 18,19″ S; 62° 14′ 56,43″ E</i>
+        </div>
+
+        <div class="contact">
+            <ul>
+                <li class="email">
+                    <p>Correo electrónico:</p>
+                    <a href="mailto:info@fibrared.net">info@fibrared.net</a>
+                    <a href="mailto:administracion@fibrared.net">administracion@fibrared.net</a>
+                </li>
+                <li class="mobiles">
+                    <p>Teléfonos:</p>
+                    <a href="">+54 9 291 577 36 84</a>
+                    <a href="">+54 9 291 503 82 30</a>
+                    <a href="">+54 9 291 517 15 20</a>
+                </li>
+                <li class="channels">
+                    <p>Canales de contacto</p>
+                    <div>
+                        <a href=""><img src="./img/linkedin.png" alt="contacto icon" class="contact-icon"></a>
+                        <a href=""><img src="./img/github.png" alt="contacto icon" class="contact-icon"></a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="copy">
+            <img src="./img/DATAWEB.jpg" alt="data fiscal">
+            <p>&copy; FibraRed Telecomunicaciones 2025 - Todos los derechos reservados</p>
+        </div>
+    </footer>
+</body>
+
+</html>

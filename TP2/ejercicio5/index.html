@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Ejercicio 5 - Validación de Formulario</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <form id="miFormulario" novalidate>
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" />
+        <div id="error-nombre" class="error"></div>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" />
+        <div id="error-email" class="error"></div>
+
+        <label for="edad">Edad:</label>
+        <input type="number" id="edad" name="edad" />
+        <div id="error-edad" class="error"></div>
+
+        <button type="submit">Enviar</button>
+    </form>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

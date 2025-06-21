@@ -1,0 +1,48 @@
+nav {
+  background-color: #111;
+  padding: 10px 20px;
+  width: 100%;
+  border-bottom: 4px solid #900C3F;
+}
+
+nav ul {
+  padding: 0;
+}
+
+nav ul li {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  color: white;
+  font-weight: bold;
+  padding: 0 1rem;
+  outline: none;
+}
+
+nav ul li img.swm-logo {
+  width: 118px;
+  height: 37px;
+}
+
+
+/* -- SUB BARRA DE NAVEGACION -- */
+.subnav{
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #363637;
+}
+
+.subnav ul{
+    display: flex;
+    padding: 0;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.subnav ul li{
+    font-size: 1.2rem;
+    color: #707070;
+}

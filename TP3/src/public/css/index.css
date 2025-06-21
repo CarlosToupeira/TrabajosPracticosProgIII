@@ -1,0 +1,49 @@
+/* -- CUERPO GENERAL -- */
+* {
+    font-family: "Arial", sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100%;
+    background-color: #212122;
+}
+
+/* -- CONTENEDOR -- */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px; /* ← le faltaba la unidad */
+    width: 100%;
+    padding: 100px 100px;
+}
+
+.sub-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* -- FORMULARIO -- */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    width: 100%;
+    max-width: 400px;
+}
+
+/* -- PIE DE PÁGINA -- */
+footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 60px;
+    width: 100%;
+}

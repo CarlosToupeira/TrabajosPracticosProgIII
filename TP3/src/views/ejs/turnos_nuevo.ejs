@@ -1,0 +1,34 @@
+<%- include('components/head') %>
+
+    <div class="title">
+        <h2>Menu de Pacientes</h2>
+    </div>
+
+
+    <div class="pacientes">
+
+        <form id="formTurno">
+            <!-- Selección de paciente -->
+            <label for="selectPaciente">Paciente:</label>
+            <select id="selectPaciente" name="pacienteId" required></select><br><br>
+
+            <!-- Fecha del turno -->
+            <label for="fecha">Fecha:</label>
+            <input type="date" id="fecha" name="fecha" required><br><br>
+
+            <!-- Estado -->
+            <label for="estado">Estado:</label>
+            <select id="estado" name="estado" required>
+                <option value="reservado">Reservado</option>
+                <option value="cancelado">Cancelado</option>
+            </select><br><br>
+
+            <button type="submit">Registrar turno</button>
+        </form>
+
+        <div id="mensaje"></div>
+    </div>
+
+
+    <script type="text/javascript" src="/public/js/turnos_nuevo.js"></script>
+    <%- include('components/footer') %>

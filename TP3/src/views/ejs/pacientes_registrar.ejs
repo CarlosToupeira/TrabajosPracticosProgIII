@@ -1,0 +1,20 @@
+<%- include('components/head') %>
+
+    <div class="container">
+
+        <div class="sub-container">
+            <form id="formPaciente" class="flex">
+                <input type="email" name="email" id="email" placeholder="Correo electronico..." class="s_input"
+                    required>
+                <input type="text" name="name" id="name" placeholder="Nombre del paciente..." class="s_input" required>
+                <button type="submit">Ingresar paciente</button>
+            </form>
+        </div>
+
+        <div id="mensaje"></div>
+    </div>
+
+
+    <script type="text/javascript" src="/public/js/pacientes_nuevo.js"></script>
+
+    <%- include('components/footer') %>

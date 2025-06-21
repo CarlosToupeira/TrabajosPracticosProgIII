@@ -1,0 +1,36 @@
+<%- include('components/head') %>
+
+    <!-- titulo -->
+    <div class="title">
+        <h2>Editar Turno</h2>
+    </div>
+
+    <div class="pacientes">
+        <form id="formTurno">
+            <label for="selectPaciente">Paciente:</label>
+            <select id="selectPaciente" name="pacienteId" required></select><br><br>
+
+            <label for="fecha">Fecha:</label>
+            <input type="date" id="fecha" name="fecha" required><br><br>
+
+            <label for="estado">Estado:</label>
+            <select id="estado" name="estado" required>
+                <option value="reservado">Reservado</option>
+                <option value="cancelado">Cancelado</option>
+            </select><br><br>
+
+            <button type="submit">Actualizar turno</button>
+        </form>
+
+        <div id="mensaje"></div>
+    </div>
+
+
+
+    <script type="text/javascript">
+        const turnoId = '<%= id %>'; // El id que viene del backend
+    </script>
+    <script type="text/javascript" src="/public/js/turnos_editar.js"></script>
+
+
+    <%- include('components/footer') %>
